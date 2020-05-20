@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Новый проект</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/main.min.css">
+    <link rel="stylesheet" href="./fonts/fonts.css">
+    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="shortcut icon" href="#" type="image/x-icon">
+    <link rel="apple-touch-icon" href="#"><!--[if lte IE 10]>
+    <p class="browser-upgrade">Вы используете устаревшую версию браузера. Пожалуйста </p><a class="browser-upgrade__link" href="http://browsehappy.com/">обновите свой браузер</a><![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="container">
+        <div class="sex">
+          <h2>Выберите пол</h2>
+          <div class="btns-wrap">
+            <button class="sex-btn" value="male">Мужской</button>
+            <button class="sex-btn" value="female">Женский</button>
+          </div>
+          <h2>Ваша цель</h2>
+          <div class="btns-wrap">
+            <button class="target-btn" value="1">Похудеть</button>
+            <button class="target-btn" value="2">Набрать вес</button>
+            <button class="target-btn" value="3">Поддержать вес</button>
+          </div>
+          <h2>Введите вес, рост и возраст</h2>
+          <div class="inputs-wrap">
+            <input type="text" name="weight" id="weight" placeholder="Введите вес">
+            <input type="text" name="height" id="height" placeholder="Введите рост">
+            <input type="text" name="age" id="age" placeholder="Введите возраст">
+          </div>
+          <h2>Введите ваш уровень физической активности</h2>
+          <div class="btns-wrap">
+            <button class="activity-btn">неподвижный образ жизни, больничный, инвалидность</button>
+            <button class="activity-btn">сидячий образ жизни, маленькая активность</button>
+            <button class="activity-btn">2-3 тренировки в неделю и ежедневная активность 8-10 тысяч шагов</button>
+            <button class="activity-btn">3-5 тренировок в неделю, 10-15 тысяч шагов ежедневно</button>
+            <button class="activity-btn">ежедневные тренировки, профессиональный спортсмен</button>
+          </div>
+          <h2>Посмотрите результат</h2>
+          <div class="result-wrap">
+            <div class="body-mass-index">Индекс массы тела
+              <div class="index"></div>
+              <div class="index-message"></div>
+            </div>
+            <div class="daily-calories">Калории
+              <div class="calories"></div>
+              <div class="calories-message"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script src="js/main.js"></script>
