@@ -361,40 +361,48 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     console.log("Дневная калорийность: ");
     console.log(dailyCalories);
 
+    if (weightIndex >= 0 && weightIndex < 19) {
+      dailyCalories = Math.round(metabolism * userActivity);
+      userCaloriesResult.innerHTML = dailyCalories;
+    }
+
     if (target == 1) {
       if (weightIndex >= 19 && weightIndex < 25) {
         caloriesDeficiteStart = Math.round(dailyCalories - dailyCalories / 100 * 10);
         caloriesDeficiteEnd = Math.round(dailyCalories - dailyCalories / 100 * 15);
         console.log("Кал. для похудения: ");
         console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+        userCaloriesResult.innerHTML = caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
       } else if (weightIndex >= 25 && weightIndex < 30) {
         caloriesDeficiteStart = Math.round(dailyCalories - dailyCalories / 100 * 15);
         caloriesDeficiteEnd = Math.round(dailyCalories - dailyCalories / 100 * 20);
         console.log("Кал. для похудения: ");
         console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+        userCaloriesResult.innerHTML = caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
       } else if (weightIndex >= 30) {
         caloriesDeficiteStart = Math.round(dailyCalories - dailyCalories / 100 * 10);
         caloriesDeficiteEnd = Math.round(dailyCalories - dailyCalories / 100 * 15);
         console.log("Кал. для похудения: ");
         console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+        userCaloriesResult.innerHTML = caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
       }
     } else if (target == 2) {
       caloriesDeficiteStart = dailyCalories + 100;
       caloriesDeficiteEnd = dailyCalories + 200;
       console.log("Кал. для набора веса: ");
       console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+      userCaloriesResult.innerHTML = caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
     }
   }
 
   function resultShow() {
     userB_M_IResult.innerHTML = weightIndex;
-    userB_M_IMes.innerHTML = weightIndexMessage;
-
-    if (target == 3) {
-      userCaloriesResult.innerHTML = dailyCalories;
-    } else {
-      userCaloriesResult.innerHTML = caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
-    }
+    userB_M_IMes.innerHTML = weightIndexMessage; // if (target == 3) {
+    //   userCaloriesResult.innerHTML = dailyCalories;
+    // } else {
+    //   userCaloriesResult.innerHTML =
+    //     caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
+    // }
 
     userCaloriesMes.innerHTML = "Рекомендуемое суточное количество калорий";
   }
