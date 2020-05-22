@@ -1,15 +1,15 @@
 "use strict";
 
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 // Polyfill for forEach method
 if (window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = Array.prototype.forEach;
 }
-"use strict";
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 /*! modernizr 3.6.0 (Custom Build) | MIT *
  * https://modernizr.com/download/?-webp-setclasses !*/
+
+
 !function (e, n, A) {
   function o(e, n) {
     return _typeof(e) === n;
@@ -156,174 +156,261 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
   e.Modernizr = Modernizr;
 }(window, document);
-"use strict";
-
 ;
+
+(function () {
+  var docInfo = {
+    info: {
+      title: 'Тестовый документ PDF',
+      author: 'BeInShape',
+      subject: 'Диета',
+      keywords: 'Ключевые слова'
+    },
+    pageSize: 'A4',
+    pageOrientation: 'landscape',
+    pageMargins: [50, 50, 30, 60],
+    // Отступы от левого края, верхнего, правого и нижнего
+    header: function header(currentPage, pageCount) {
+      // Текущая страница, общее кол-во листов документа
+      return {
+        text: currentPage.toString() + 'из' + pageCount,
+        alignment: 'right',
+        margin: [0, 30, 10, 50]
+      };
+    },
+    footer: [{
+      text: 'Нижний колонтитул',
+      alignment: 'center' // По умолчанию left
+
+    }],
+    content: [{
+      text: 'Первая неделя',
+      fontSize: 30,
+      alignment: 'center' // pageBrake: 'after' // Разрыв страницы после этого параграфа (before - до этого параграфа). Последующая инфа будет отображаться на новом листе 
+
+    }, {
+      text: 'Понедельник',
+      fontSize: 20
+    }]
+  }; // pdfMake.createPdf(docInfo).open(); // Открыть документ в новой вкладке браузера
+  // pdfMake.createPdf(docInfo).download('диета.pdf'); // Скачать документ (названеи документа, который получит пользователь)
+})();
 
 (function () {
   /* ПЕРЕМЕННЫЕ  */
   // Выбор пола
-  var femaleBtns = document.querySelectorAll('.sex-btn'),
-      weight = document.getElementById('weight'),
-      height = document.getElementById('height'),
-      age = document.getElementById('age'),
-      activityBtns = document.querySelectorAll('.activity-btn'),
-      targetBtns = document.querySelectorAll('.target-btn'),
-      userB_M_IResult = document.querySelector('.index'),
-      userB_M_IMes = document.querySelector('.index-message'),
-      userCaloriesResult = document.querySelector('.calories'),
-      userCaloriesMes = document.querySelector('.calories-message'); // Данные
+  var femaleBtns = document.querySelectorAll(".sex-btn"),
+      weight = document.getElementById("weight"),
+      height = document.getElementById("height"),
+      age = document.getElementById("age"),
+      activityBtns = document.querySelectorAll(".activity-btn"),
+      targetBtns = document.querySelectorAll(".target-btn"),
+      userB_M_IResult = document.querySelector(".index"),
+      userB_M_IMes = document.querySelector(".index-message"),
+      userCaloriesResult = document.querySelector(".calories"),
+      userCaloriesMes = document.querySelector(".calories-message"),
+      calcBtn = document.getElementById("calc"); // Данные
 
-  var userSex, userWeight, userHeight, userAge, userB_M_I, userActivity, dailyCalories, metabolism, target, caloriesDeficiteStart, caloriesDeficiteEnd, userB_M_IMassage;
+  var userSex, userWeight, userHeight, userAge, weightIndex, userActivity, dailyCalories, metabolism, target, caloriesDeficiteStart, caloriesDeficiteEnd, weightIndexMessage, normalWeight;
   /* ФУНКЦИИ ДЛЯ РАСЧЕТОВ */
 
   function userParams() {
     femaleBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener("click", function () {
         userSex = btn.value;
         console.log("\u041F\u043E\u043B: ".concat(userSex));
       });
       return userSex;
     });
     targetBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener("click", function () {
         target = btn.value;
         console.log("\u0426\u0435\u043B\u044C: ".concat(target));
       });
       return target;
     });
-    weight.addEventListener('change', function () {
-      userWeight = weight.value;
-      console.log("\u0412\u0435\u0441: ".concat(userWeight));
+    weight.addEventListener("change", function () {
+      userWeight = Number(weight.value);
+      console.log("Вес: ");
+      console.log(userWeight);
       return userWeight;
     });
-    height.addEventListener('change', function () {
-      userHeight = height.value / 100;
-      console.log("\u0420\u043E\u0441\u0442: ".concat(userHeight));
+    height.addEventListener("change", function () {
+      userHeight = Number(height.value);
+      console.log("Рост: ");
+      console.log(userHeight);
       return userHeight;
     });
-    age.addEventListener('change', function () {
-      userAge = age.value;
-      console.log("\u0412\u043E\u0437\u0440\u0430\u0441\u0442: ".concat(userAge));
+    age.addEventListener("change", function () {
+      userAge = Number(age.value);
+      console.log("Возраст: ");
+      console.log(userAge);
       return userAge;
-    });
-    activityBtns.forEach(function (btn, i) {
-      btn.addEventListener('click', function () {
-        // console.log(i);
-        if (i == 0 && userSex == 'male') {
-          userActivity = 31;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        } else if (i == 0 && userSex == 'female') {
-          userActivity = 28;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        }
-
-        if (i == 1 && userSex == 'male') {
-          userActivity = 32;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        } else if (i == 1 && userSex == 'female') {
-          userActivity = 30;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        }
-
-        if (i == 2 && userSex == 'male') {
-          userActivity = 33;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        } else if (i == 2 && userSex == 'female') {
-          userActivity = 31;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        }
-
-        if (i == 3 && userSex == 'male') {
-          userActivity = 35;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        } else if (i == 3 && userSex == 'female') {
-          userActivity = 33;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        }
-
-        if (i == 4 && userSex == 'male') {
-          userActivity = 37;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        } else if (i == 4 && userSex == 'female') {
-          userActivity = 35;
-          console.log("\u041A\u043E\u044D\u0444. \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u0438: ".concat(userActivity));
-        }
-
-        dailyCalories = userWeight * userActivity;
-        console.log("\u0414\u043D\u0435\u0432\u043D\u0430\u044F \u043A\u0430\u043B\u043E\u0440\u0438\u0439\u043D\u043E\u0441\u0442\u044C: ".concat(dailyCalories));
-
-        if (userSex == 'male') {
-          metabolism = 24 * userWeight;
-        } else if (userSex == 'female') {
-          metabolism = 22 * userWeight;
-        }
-
-        console.log("\u041E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u043E\u0431\u043C\u0435\u043D: ".concat(metabolism));
-        userB_M_I = Math.round(userWeight / (userHeight * userHeight));
-        console.log("\u0418\u041C\u0422: ".concat(userB_M_I));
-
-        if (target == 1) {
-          if (userB_M_I >= 18 && userB_M_I <= 25) {
-            caloriesDeficiteStart = dailyCalories - dailyCalories / 100 * 5;
-            caloriesDeficiteEnd = dailyCalories - dailyCalories / 100 * 10;
-          }
-
-          if (userB_M_I >= 26 && userB_M_I <= 29) {
-            caloriesDeficiteStart = dailyCalories - dailyCalories / 100 * 15;
-            caloriesDeficiteEnd = dailyCalories - dailyCalories / 100 * 20;
-          }
-
-          if (userB_M_I > 29) {
-            caloriesDeficiteStart = dailyCalories - dailyCalories / 100 * 5;
-            caloriesDeficiteEnd = dailyCalories - dailyCalories / 100 * 10;
-          }
-
-          console.log("\u041A\u0430\u043B\u043E\u0440\u0438\u0438 \u0434\u043B\u044F \u043F\u043E\u0445\u0443\u0434\u0435\u043D\u0438\u044F: ".concat(caloriesDeficiteStart, " - ").concat(caloriesDeficiteEnd));
-        } else if (target == 2) {
-          caloriesDeficiteStart = dailyCalories + 100;
-          caloriesDeficiteEnd = dailyCalories + 200;
-          console.log("\u041A\u0430\u043B\u043E\u0440\u0438\u0438 \u0434\u043B\u044F \u043D\u0430\u0431\u043E\u0440\u0430 \u0432\u0435\u0441\u0430: ".concat(caloriesDeficiteStart, " - ").concat(caloriesDeficiteEnd));
-        }
-
-        if (userB_M_I < 20) {
-          userB_M_IMassage = 'недостаток веса';
-        } else if (userB_M_I >= 21 && userB_M_I < 25) {
-          userB_M_IMassage = 'нормальный вес';
-        } else if (userB_M_I >= 25 && userB_M_I <= 29) {
-          userB_M_IMassage = 'есть лишний вес';
-        } else if (userB_M_I > 30) {
-          userB_M_IMassage = 'ожирение';
-        }
-
-        userB_M_IResult.innerHTML = userB_M_I;
-        userB_M_IMes.innerHTML = userB_M_IMassage;
-        userCaloriesResult.innerHTML = caloriesDeficiteStart + ' - ' + caloriesDeficiteEnd;
-        userCaloriesMes.innerHTML = 'Рекомендуемое суточное количество калорий';
-      });
-      return userActivity;
     });
   }
 
-  userParams(); // if (userSex != undefined && userWeight != undefined && userHeight != undefined && userAge != undefined) {
-  //     bodyMassIndex(userWeight, userHeight);
-  // }
-  // function bodyMassIndex(w, h) {
-  //     body_mass_index = w / (h * h);
-  //     console.log(body_mass_index);
-  // }
-  // setTimeout(function () {
-  //     console.log(userSex);
-  // }, 5000);
-})();
-"use strict";
+  userParams();
 
+  function weightIndexCalc() {
+    weightIndex = Number(Math.round(userWeight / (userHeight * userHeight)));
+    console.log("ИМТ: ");
+    console.log(weightIndex);
+
+    if (weightIndex >= 0 && weightIndex < 16) {
+      console.log("ИМТ: Выраженный дефицит массы тела");
+      weightIndexMessage = "Выраженный дефицит массы тела";
+    }
+
+    if (weightIndex >= 16 && weightIndex < 19) {
+      console.log("ИМТ: Недостаточная масса тела");
+      weightIndexMessage = "Недостаточная масса тела";
+    }
+
+    if (weightIndex >= 20 && weightIndex < 25) {
+      console.log("ИМТ: Нормальная масса тела");
+      weightIndexMessage = "Нормальная масса тела";
+    }
+
+    if (weightIndex >= 25 && weightIndex < 30) {
+      console.log("ИМТ: Избыточная масса тела (предожирение)");
+      weightIndexMessage = "Избыточная масса тела (предожирение)";
+    }
+
+    if (weightIndex >= 30 && weightIndex < 35) {
+      console.log("ИМТ: Ожирение 1-ой степени");
+      weightIndexMessage = "Ожирение 1-ой степени";
+    }
+
+    if (weightIndex >= 35 && weightIndex <= 40) {
+      console.log("ИМТ: Ожирение 2-ой степени");
+      weightIndexMessage = "Ожирение 2-ой степени";
+    }
+
+    if (weightIndex > 40) {
+      console.log("ИМТ: Ожирение 3-ой степени");
+      weightIndexMessage = "Ожирение 3-ой степени";
+    }
+
+    return weightIndex;
+  }
+
+  function minCalories() {
+    if (weightIndex > 29 || weightIndex >= 0 && weightIndex <= 19) {
+      normalWeight = userHeight * 100 - 100;
+      console.log("Нормальный вес: ");
+      console.log(normalWeight);
+
+      if (userSex == "male") {
+        metabolism = Math.round(9.9 * normalWeight + 6.25 * (userHeight * 100) - 4.92 * userAge + 5);
+      } else if (userSex == "female") {
+        metabolism = Math.round(9.9 * normalWeight + 6.25 * (userHeight * 100) - 4.92 * userAge - 161);
+      }
+    } else {
+      if (userSex == "male") {
+        metabolism = Math.round(9.9 * userWeight + 6.25 * (userHeight * 100) - 4.92 * userAge + 5);
+      } else if (userSex == "female") {
+        metabolism = Math.round(9.9 * userWeight + 6.25 * (userHeight * 100) - 4.92 * userAge - 161);
+      }
+    }
+
+    console.log("Минимальная калорийность (основной обмен): ");
+    console.log(metabolism);
+    return metabolism;
+  }
+
+  function activity() {
+    activityBtns.forEach(function (btn, i) {
+      btn.addEventListener("click", function () {
+        if (i == 0) {
+          userActivity = 1.2;
+          console.log("Коэф. активности: ");
+          console.log(userActivity);
+        } else if (i == 1) {
+          userActivity = 1.3;
+          console.log("Коэф. активности: ");
+          console.log(userActivity);
+        } else if (i == 2) {
+          userActivity = 1.4;
+          console.log("Коэф. активности: ");
+          console.log(userActivity);
+        } else if (i == 3) {
+          userActivity = 1.5;
+          console.log("Коэф. активности: ");
+          console.log(userActivity);
+        } else if (i == 4) {
+          userActivity = 1.6;
+          console.log("Коэф. активности: ");
+          console.log(userActivity);
+        } else if (i == 5) {
+          userActivity = 1.9;
+          console.log("Коэф. активности: ");
+          console.log(userActivity);
+        }
+      });
+    });
+    return userActivity;
+  }
+
+  activity();
+
+  function dailyCaloriesCalc() {
+    dailyCalories = Math.round(metabolism * userActivity);
+    console.log("Дневная калорийность: ");
+    console.log(dailyCalories);
+
+    if (target == 1) {
+      if (weightIndex >= 19 && weightIndex < 25) {
+        caloriesDeficiteStart = Math.round(dailyCalories - dailyCalories / 100 * 10);
+        caloriesDeficiteEnd = Math.round(dailyCalories - dailyCalories / 100 * 15);
+        console.log("Кал. для похудения: ");
+        console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+      } else if (weightIndex >= 25 && weightIndex < 30) {
+        caloriesDeficiteStart = Math.round(dailyCalories - dailyCalories / 100 * 15);
+        caloriesDeficiteEnd = Math.round(dailyCalories - dailyCalories / 100 * 20);
+        console.log("Кал. для похудения: ");
+        console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+      } else if (weightIndex >= 30) {
+        caloriesDeficiteStart = Math.round(dailyCalories - dailyCalories / 100 * 10);
+        caloriesDeficiteEnd = Math.round(dailyCalories - dailyCalories / 100 * 15);
+        console.log("Кал. для похудения: ");
+        console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+      }
+    } else if (target == 2) {
+      caloriesDeficiteStart = dailyCalories + 100;
+      caloriesDeficiteEnd = dailyCalories + 200;
+      console.log("Кал. для набора веса: ");
+      console.log(caloriesDeficiteStart + " - " + caloriesDeficiteEnd);
+    }
+  }
+
+  function resultShow() {
+    userB_M_IResult.innerHTML = weightIndex;
+    userB_M_IMes.innerHTML = weightIndexMessage;
+
+    if (target == 3) {
+      userCaloriesResult.innerHTML = dailyCalories;
+    } else {
+      userCaloriesResult.innerHTML = caloriesDeficiteStart + " - " + caloriesDeficiteEnd;
+    }
+
+    userCaloriesMes.innerHTML = "Рекомендуемое суточное количество калорий";
+  }
+
+  calc.addEventListener("click", function () {
+    weightIndexCalc();
+    minCalories();
+    dailyCaloriesCalc();
+    resultShow();
+  });
+})();
 /*!
  * @copyright Copyright (c) 2017 IcoMoon.io
  * @license   Licensed under MIT license
  *            See https://github.com/Keyamoon/svgxuse
  * @version   1.2.6
  */
+
+
 (function () {
   if ("undefined" !== typeof window && window.addEventListener) {
     var e = Object.create(null),

@@ -23,25 +23,26 @@
             <button class="sex-btn" value="male">Мужской</button>
             <button class="sex-btn" value="female">Женский</button>
           </div>
-          <h2>Ваша цель</h2>
-          <div class="btns-wrap">
-            <button class="target-btn" value="1">Похудеть</button>
-            <button class="target-btn" value="2">Набрать вес</button>
-            <button class="target-btn" value="3">Поддержать вес</button>
-          </div>
           <h2>Введите вес, рост и возраст</h2>
           <div class="inputs-wrap">
             <input type="text" name="weight" id="weight" placeholder="Введите вес">
             <input type="text" name="height" id="height" placeholder="Введите рост">
             <input type="text" name="age" id="age" placeholder="Введите возраст">
           </div>
+          <h2>Ваша цель</h2>
+          <div class="btns-wrap">
+            <button class="target-btn" value="1">Похудеть</button>
+            <button class="target-btn" value="2">Набрать вес</button>
+            <button class="target-btn" value="3">Поддержать вес</button>
+          </div>
           <h2>Введите ваш уровень физической активности</h2>
           <div class="btns-wrap">
-            <button class="activity-btn">неподвижный образ жизни, больничный, инвалидность</button>
-            <button class="activity-btn">сидячий образ жизни, маленькая активность</button>
-            <button class="activity-btn">2-3 тренировки в неделю и ежедневная активность 8-10 тысяч шагов</button>
-            <button class="activity-btn">3-5 тренировок в неделю, 10-15 тысяч шагов ежедневно</button>
-            <button class="activity-btn">ежедневные тренировки, профессиональный спортсмен</button>
+            <button class="activity-btn">сидячая работа, мало двигаетесь</button>
+            <button class="activity-btn">легкие тренировки 2-3 раза в неделю</button>
+            <button class="activity-btn">тренировки 5 раз в неделю, либо физическая работа</button>
+            <button class="activity-btn">интенсивные тренировки 5 раз в неделю</button>
+            <button class="activity-btn">ежедневные тренировки</button>
+            <button class="activity-btn">тяжелая физическая работа или интенсивные тренировки 2 раза в день</button>
           </div>
           <h2>Посмотрите результат</h2>
           <div class="result-wrap">
@@ -54,9 +55,12 @@
               <div class="calories-message"></div>
             </div>
           </div>
+          <button class="calc" id="calc">Рассчитать</button>
         </div>
       </div>
     </div>
   </body>
 </html>
-<script src="js/main.js"></script>
+<script src="js/pdfmake.min.js"></script>
+<script src="js/vfs_fonts.js"></script>
+<script src="js/index.js"></script>
