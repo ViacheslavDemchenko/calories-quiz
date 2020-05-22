@@ -68,6 +68,7 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   // Данные
   let userSex,
     userWeight,
+    userHeightMeters,
     userHeight,
     userAge,
     weightIndex,
@@ -123,7 +124,12 @@ if (window.NodeList && !NodeList.prototype.forEach) {
   userParams();
 
   function weightIndexCalc() {
-    weightIndex = Number(Math.round(userWeight / (userHeight * userHeight)));
+    userHeightMeters = userHeight / 100;
+    console.log("Вес в метрах: ");
+    console.log(userHeightMeters);
+    weightIndex = Number(
+      Math.round(userWeight / (userHeightMeters * userHeightMeters))
+    );
     console.log("ИМТ: ");
     console.log(weightIndex);
 
@@ -160,27 +166,27 @@ if (window.NodeList && !NodeList.prototype.forEach) {
 
   function minCalories() {
     if (weightIndex > 29 || (weightIndex >= 0 && weightIndex <= 19)) {
-      normalWeight = userHeight * 100 - 100;
+      normalWeight = userHeight - 100;
       console.log("Нормальный вес: ");
       console.log(normalWeight);
 
       if (userSex == "male") {
         metabolism = Math.round(
-          9.9 * normalWeight + 6.25 * (userHeight * 100) - 4.92 * userAge + 5
+          9.9 * normalWeight + 6.25 * userHeight - 4.92 * userAge + 5
         );
       } else if (userSex == "female") {
         metabolism = Math.round(
-          9.9 * normalWeight + 6.25 * (userHeight * 100) - 4.92 * userAge - 161
+          9.9 * normalWeight + 6.25 * userHeight - 4.92 * userAge - 161
         );
       }
     } else {
       if (userSex == "male") {
         metabolism = Math.round(
-          9.9 * userWeight + 6.25 * (userHeight * 100) - 4.92 * userAge + 5
+          9.9 * userWeight + 6.25 * userHeight - 4.92 * userAge + 5
         );
       } else if (userSex == "female") {
         metabolism = Math.round(
-          9.9 * userWeight + 6.25 * (userHeight * 100) - 4.92 * userAge - 161
+          9.9 * userWeight + 6.25 * userHeight - 4.92 * userAge - 161
         );
       }
     }
